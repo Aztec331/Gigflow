@@ -6,7 +6,7 @@ import Rough from './components/Rough'
 function App() {
   return (
 
-    <div className='h-screen w-screen'>
+    <div className='min-h-screen bg-slate-950'>
     <BrowserRouter>
 
       <Routes>
