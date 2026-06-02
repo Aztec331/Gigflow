@@ -135,7 +135,9 @@ export default function Rough() {
           {/* Divider */}
           <div className="flex items-center my-6">
             <div className="flex-1 border-t border-blue-500 border-opacity-20"></div>
+
             <span className="px-4 text-gray-400 text-sm">or</span>
+            
             <div className="flex-1 border-t border-blue-500 border-opacity-20"></div>
           </div>
 
