@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { loginUser, registerUser } from "../api/auth"
 
 export default function AuthPage() {
 
@@ -12,16 +13,25 @@ export default function AuthPage() {
   })
 
   const handleChange = (e) => {
+
   const { name, value } = e.target
+
   setFormData(prev => ({
     ...prev,
     [name]: value
-  }))
+  }) )
+
   }
 
   const handleSubmit = (e) => {
   e.preventDefault()
-  console.log('Form submitted:', formData)
+
+  try{}
+
+  catch(error){
+    
+  }
+
   }
 
 

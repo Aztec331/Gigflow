@@ -1,24 +1,11 @@
-<!DOCTYPE html>
-<html>
-<body>
-
-<!-- input is the element here -->
-<input
-  id="name"
-  name="name"
-  placeholder="Type here"
-/>
-
 <script>
 
-//e here means current event object
-document.getElementById("name").addEventListener("input", (e) => {
+const key = "email"
 
-    console.log("e =", e.target.value)
+const obj = {
+  [key]: "Aztec"
+}
 
-  })
+console.log(obj)
 
 </script>
-
-</body>
-</html>
