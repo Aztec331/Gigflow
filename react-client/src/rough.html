@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<!-- input is the element here -->
+<input
+  id="name"
+  name="name"
+  placeholder="Type here"
+/>
+
+<script>
+
+//e here means current event object
+document.getElementById("name").addEventListener("input", (e) => {
+
+    console.log("e =", e.target.value)
+
+  })
+
+</script>
+
+</body>
+</html>
