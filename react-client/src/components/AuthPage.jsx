@@ -1,5 +1,8 @@
+// this page's isLogin state is flipped
+// hence true is false and false is true
 import { useState } from "react"
 import { loginUser, registerUser } from "../api/auth"
+
 
 export default function AuthPage() {
 
@@ -12,6 +15,8 @@ export default function AuthPage() {
     confirmPassword: ""
   })
 
+  const [error, setError] = useState("")
+
   const handleChange = (e) => {
 
   const { name, value } = e.target
@@ -23,13 +28,37 @@ export default function AuthPage() {
 
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
   e.preventDefault()
 
-  try{}
+  try{
+    if(isLogin){
+      // Check if passwords match
+      if(formData.password !== formData.confirmPassword){
+        console.error('Passwords do not match')
+        return
+      }
+
+      const response = await registerUser({
+      name: formData.name,
+      email: formData.email,
+      password: formData.password
+      })
+      console.log('Register success:', response.data)
+  }
+
+    else{
+      const response = await loginUser({
+        email: formData.email,
+        password: formData.password
+      })
+      console.log('Login success:', response.data)
+    }
+  }
+
 
   catch(error){
-    
+  console.error('Error:', error.response?.data || error.message)
   }
 
   }
