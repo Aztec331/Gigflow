@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { loginUser, registerUser } from "../api/auth"
 
-
 export default function AuthPage() {
 
   const[isLogin, setIsLogin] = useState(false)
@@ -30,12 +29,14 @@ export default function AuthPage() {
 
   const handleSubmit = async (e) => {
   e.preventDefault()
+  setError("") // Clear previous errors
 
+  //Register api 
   try{
     if(isLogin){
       // Check if passwords match
       if(formData.password !== formData.confirmPassword){
-        console.error('Passwords do not match')
+        setError('Passwords do not match')
         return
       }
 
@@ -45,17 +46,19 @@ export default function AuthPage() {
       password: formData.password
       })
       console.log('Register success:', response.data)
+      setFormData({ name: "", email: "", password: "", confirmPassword: "" })
   }
 
-    else{
+  //Login api
+  else{
       const response = await loginUser({
         email: formData.email,
         password: formData.password
       })
       console.log('Login success:', response.data)
+      setFormData({ name: "", email: "", password: "", confirmPassword: "" })
     }
   }
-
 
   catch(error){
   console.error('Error:', error.response?.data || error.message)
@@ -157,6 +160,13 @@ export default function AuthPage() {
         />
       </div>
       )}
+
+      {error && (
+        <div className="bg-red-500 bg-opacity-20 border border-red-500 text-red-400 px-4 py-2 rounded-lg text-sm mt-4">
+        {error}
+        </div>
+      )}
+
 
     {/* submit button */}
     <div className="flex justify-center">

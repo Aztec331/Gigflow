@@ -1,8 +1,5 @@
-const name = "email"
-const value = "aztec@gmail.com"
+const error = ''
+console.log(error ? 'this is TRUE' : 'this is FALSE')
 
-const obj = {
-  [name]: value
-}
-
-console.log(obj)
+const message = 'Passwords do not match'
+console.log(message ? 'this is TRUE' : 'this is FALSE')
