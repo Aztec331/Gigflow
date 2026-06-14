@@ -1,14 +1,9 @@
-export default function MainPage(){
+export default function MainPage() { 
 
-    return(
-        <>
+  return (
+    <div>
+      Bhenchod
+    </div>
 
-        <div>
-            behenchod but in MainPage
-        </div>
-        
-        
-        </>
-    )
-
+  )
 }

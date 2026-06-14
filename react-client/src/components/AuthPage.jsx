@@ -2,6 +2,7 @@
 // hence true is false and false is true
 import { useState } from "react"
 import { loginUser, registerUser } from "../api/auth"
+import { useNavigate } from "react-router-dom"
 
 export default function AuthPage() {
 
@@ -15,6 +16,8 @@ export default function AuthPage() {
   })
 
   const [error, setError] = useState("")
+
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
 
@@ -57,10 +60,12 @@ export default function AuthPage() {
       })
       console.log('Login success:', response.data)
       setFormData({ name: "", email: "", password: "", confirmPassword: "" })
+      navigate("/")
     }
   }
 
   catch(error){
+  setError(error.response?.data?.detail || error.message || 'Something went wrong')
   console.error('Error:', error.response?.data || error.message)
   }
 

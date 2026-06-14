@@ -1,163 +1,227 @@
-import { useState } from 'react'
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
-export default function Rough() {
-  const [isLogin, setIsLogin] = useState(false)
-  
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+export default function MainPage() {
+  const [searchQuery, setSearchQuery] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState("All")
+  const navigate = useNavigate()
+
+  const categories = ["All", "Web Development", "Design", "DevOps", "Mobile", "AI/ML"]
+
+  const [gigs] = useState([
+    {
+      id: 1,
+      title: "React Dashboard Development",
+      description: "Build an analytics dashboard with React and TypeScript",
+      budget: 5000,
+      category: "Web Development",
+      level: "Intermediate",
+      bids: 3
+    },
+    {
+      id: 2,
+      title: "UI/UX Design for SaaS",
+      description: "Design user interface for project management tool",
+      budget: 3000,
+      category: "Design",
+      level: "Expert",
+      bids: 7
+    },
+    {
+      id: 3,
+      title: "Node.js REST API",
+      description: "Create scalable REST API with authentication",
+      budget: 6000,
+      category: "Backend",
+      level: "Intermediate",
+      bids: 5
+    },
+    {
+      id: 4,
+      title: "Database Schema Design",
+      description: "Design PostgreSQL database for e-commerce",
+      budget: 2500,
+      category: "Backend",
+      level: "Expert",
+      bids: 2
+    },
+    {
+      id: 5,
+      title: "Flutter App Development",
+      description: "Build iOS and Android app for fitness tracking",
+      budget: 8000,
+      category: "Mobile",
+      level: "Intermediate",
+      bids: 4
+    },
+    {
+      id: 6,
+      title: "DevOps Pipeline Setup",
+      description: "Setup CI/CD with GitHub Actions and Docker",
+      budget: 4500,
+      category: "DevOps",
+      level: "Expert",
+      bids: 2
+    },
+    {
+      id: 7,
+      title: "Vue.js Component Library",
+      description: "Create reusable component library for UI",
+      budget: 4000,
+      category: "Web Development",
+      level: "Intermediate",
+      bids: 6
+    },
+    {
+      id: 8,
+      title: "GraphQL API Development",
+      description: "Build GraphQL server with Node.js and Apollo",
+      budget: 7000,
+      category: "Backend",
+      level: "Expert",
+      bids: 3
+    },
+    {
+      id: 9,
+      title: "React Native Mobile App",
+      description: "Develop cross-platform app with React Native",
+      budget: 9000,
+      category: "Mobile",
+      level: "Intermediate",
+      bids: 5
+    },
+    {
+      id: 10,
+      title: "Brand Identity Design",
+      description: "Create complete brand identity system",
+      budget: 3500,
+      category: "Design",
+      level: "Expert",
+      bids: 8
+    },
+    {
+      id: 11,
+      title: "Kubernetes Setup",
+      description: "Setup and configure Kubernetes cluster",
+      budget: 5500,
+      category: "DevOps",
+      level: "Expert",
+      bids: 1
+    },
+    {
+      id: 12,
+      title: "Machine Learning Model",
+      description: "Build ML model for prediction tasks",
+      budget: 8500,
+      category: "AI/ML",
+      level: "Expert",
+      bids: 4
+    }
+  ])
+
+  const filteredGigs = gigs.filter(gig => {
+    const matchesSearch = gig.title.toLowerCase().includes(searchQuery.toLowerCase())
+    const matchesCategory = selectedCategory === "All" || gig.category === selectedCategory
+    return matchesSearch && matchesCategory
   })
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log('Form submitted:', formData)
-    // Add auth logic here later
-  }
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 flex items-center justify-center p-4">
-      {/* Glow effect background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-screen filter blur-3xl opacity-10"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-600 rounded-full mix-blend-screen filter blur-3xl opacity-10"></div>
+    <div className="min-h-screen bg-slate-950 text-white">
+      {/* Header */}
+      <header className="sticky top-0 z-50 bg-slate-900 border-b border-blue-500 border-opacity-20">
+        <div className="max-w-6xl mx-auto px-8 py-4 flex justify-between items-center">
+          <h1 className="text-2xl font-bold">GigFlow</h1>
+          <nav className="flex gap-6 items-center">
+            <button className="text-gray-300 hover:text-white transition-colors text-sm">Browse</button>
+            <button className="text-gray-300 hover:text-white transition-colors text-sm">My Bids</button>
+            <button className="text-gray-300 hover:text-white transition-colors text-sm">Messages</button>
+            <button 
+              onClick={() => navigate("/auth")}
+              className="text-gray-300 hover:text-white transition-colors text-sm"
+            >
+              Account
+            </button>
+          </nav>
+        </div>
+      </header>
+
+      {/* Search Section */}
+      <div className="bg-slate-900 bg-opacity-50 border-b border-blue-500 border-opacity-10 py-8">
+        <div className="max-w-6xl mx-auto px-8">
+          <div className="flex gap-3">
+            <input
+              type="text"
+              placeholder="Search gigs..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="flex-1 px-4 py-3 bg-slate-800 border border-blue-500 border-opacity-30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-400 text-sm"
+            />
+            <button className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-lg font-medium text-sm transition-colors">
+              Post a Gig
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* Main container */}
-      <div className="relative w-full max-w-md">
-        {/* Card */}
-        <div className="bg-slate-900 bg-opacity-80 backdrop-blur-xl border border-blue-500 border-opacity-20 rounded-2xl p-8 shadow-2xl">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-white mb-2">GigFlow</h1>
-            <p className="text-blue-300 text-sm font-medium">
-              {isLogin ? 'Welcome back' : 'Join the platform'}
-            </p>
+      {/* Main Content */}
+      <div className="max-w-6xl mx-auto px-8 py-8">
+        {/* Category Filter */}
+        <div className="mb-8">
+          <p className="text-gray-400 text-sm mb-3">Category</p>
+          <div className="flex gap-2 flex-wrap">
+            {categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-4 py-2 rounded-lg text-sm transition-all ${
+                  selectedCategory === cat
+                    ? "bg-blue-600 text-white"
+                    : "bg-slate-800 text-gray-300 hover:bg-slate-700 border border-blue-500 border-opacity-20"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
-
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Name field - only show in register mode */}
-            {!isLogin && (
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="John Doe"
-                  className="w-full px-4 py-2.5 bg-slate-800 border border-blue-500 border-opacity-30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-400 focus:border-opacity-100 transition-all"
-                />
-              </div>
-            )}
-
-            {/* Email field */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                Email Address
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="you@example.com"
-                className="w-full px-4 py-2.5 bg-slate-800 border border-blue-500 border-opacity-30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-400 focus:border-opacity-100 transition-all"
-              />
-            </div>
-
-            {/* Password field */}
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="••••••••"
-                className="w-full px-4 py-2.5 bg-slate-800 border border-blue-500 border-opacity-30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-400 focus:border-opacity-100 transition-all"
-              />
-            </div>
-
-            {/* Confirm Password - only show in register mode */}
-            {!isLogin && (
-              <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2">
-                  Confirm Password
-                </label>
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  placeholder="••••••••"
-                  className="w-full px-4 py-2.5 bg-slate-800 border border-blue-500 border-opacity-30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-400 focus:border-opacity-100 transition-all"
-                />
-              </div>
-            )}
-
-            {/* Forgot password - only show in login mode */}
-            {isLogin && (
-              <div className="text-right">
-                <a href="#" className="text-sm text-blue-400 hover:text-blue-300 transition-colors">
-                  Forgot password?
-                </a>
-              </div>
-            )}
-
-            {/* Submit button */}
-            <button
-              type="submit"
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold py-2.5 rounded-lg transition-all duration-200 mt-6 transform hover:scale-105"
-            >
-              {isLogin ? 'Sign In' : 'Create Account'}
-            </button>
-          </form>
-
-          {/* Divider */}
-          <div className="flex items-center my-6">
-            <div className="flex-1 border-t border-blue-500 border-opacity-20"></div>
-
-            <span className="px-4 text-gray-400 text-sm">or</span>
-            
-            <div className="flex-1 border-t border-blue-500 border-opacity-20"></div>
-          </div>
-
-          {/* Toggle between login and register */}
-          <p className="text-center text-gray-400 text-sm">
-            {isLogin ? "Don't have an account? " : 'Already have an account? '}
-            <button
-              type="button"
-              onClick={() => setIsLogin(!isLogin)}
-              className="text-blue-400 hover:text-blue-300 font-semibold transition-colors"
-            >
-              {isLogin ? 'Sign up' : 'Sign in'}
-            </button>
-          </p>
         </div>
 
-        {/* Footer text */}
-        <p className="text-center text-gray-500 text-xs mt-6">
-          By continuing, you agree to our Terms of Service and Privacy Policy
-        </p>
+        {/* Gigs List */}
+        <div className="space-y-3">
+          {filteredGigs.length > 0 ? (
+            filteredGigs.map(gig => (
+              <div
+                key={gig.id}
+                className="bg-slate-900 border border-blue-500 border-opacity-20 rounded-lg p-6 hover:border-opacity-50 hover:bg-slate-800 transition-all cursor-pointer group"
+              >
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-lg font-semibold group-hover:text-blue-400 transition-colors">
+                        {gig.title}
+                      </h3>
+                      <span className="text-xs bg-blue-500 bg-opacity-20 text-blue-300 px-3 py-1 rounded">
+                        {gig.level}
+                      </span>
+                    </div>
+                    <p className="text-gray-400 text-sm mb-3">{gig.description}</p>
+                    <div className="flex items-center gap-4">
+                      <span className="text-xs text-gray-500">{gig.category}</span>
+                      <span className="text-xs text-gray-500">{gig.bids} bids</span>
+                      <span className="text-blue-400 font-semibold text-sm">₹{gig.budget}</span>
+                    </div>
+                  </div>
+                  <button className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ml-4">
+                    View
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-500">No gigs found matching your search</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )
