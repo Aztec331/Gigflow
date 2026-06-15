@@ -75,7 +75,7 @@ export default function AuthPage() {
  
   return (
 
-    <div className="Daddy flex flex-col items-center justify-center h-screen p-4 ">
+    <div className="Daddy flex flex-col items-center justify-center min-h-screen p-4 bg-slate-950">
       
 
     <div className="DaddyBox bg-slate-900 rounded-2xl p-15 text-white border border-blue-500">
