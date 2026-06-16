@@ -130,7 +130,7 @@ export default function MainPage() {
     <div className="min-h-screen bg-slate-950 text-white">
 
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-slate-900 border-b-3 border-solid border-blue-500">
+      <header className="sticky top-0 z-50 bg-slate-900 border-b border-solid border-blue-500">
 
         <div className="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
           
@@ -162,7 +162,8 @@ export default function MainPage() {
       </header>
 
       {/* Search Section */}
-      <div className="bg-slate-900 bg-opacity-50 border-b border-blue-500 border-opacity-10 py-8">
+      <div className="bg-slate-900 border-solid border-b border-blue-500 py-8">
+
         <div className="max-w-7xl mx-auto px-8">
           <h2 className="text-3xl font-bold mb-6">Find Your Next Project</h2>
           <div className="flex gap-3">
@@ -181,6 +182,7 @@ export default function MainPage() {
             </button>
           </div>
         </div>
+
       </div>
 
       {/* Main Content */}

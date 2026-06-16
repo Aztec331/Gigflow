@@ -10,10 +10,10 @@ export default function MainPage() {
 
     <div className="BigDaddy h-screen bg-slate-950 text-white">
 
-    {/* Header */}
-    <header className="bg-slate-900 sticky top-0 z-50 border-b-3 border-solid border-blue-500">
+    {/* Header header's bg is bg-slate-900 */}
+    <header className="bg-red-900 sticky top-0 z-50 border-b-3 border-solid border-blue-500">
       
-      <div className=" max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
+      <div className="bg-yellow-500 max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
 
         <h1 className="text-2xl font-bold">GigFlow</h1>
 
@@ -46,10 +46,55 @@ export default function MainPage() {
 
     </header>
 
+    {/* Search Section */}
+    <div>
+
+
+
 
 
 
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
