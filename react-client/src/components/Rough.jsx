@@ -121,13 +121,15 @@ export default function MainPage() {
   ])
 
   const filteredGigs = gigs.filter(gig => {
+
     const matchesSearch = gig.title.toLowerCase().includes(searchQuery.toLowerCase())
     const matchesCategory = selectedCategory === "All" || gig.category === selectedCategory
     return matchesSearch && matchesCategory
+    
   })
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
+    <div className="FatherSupreme min-h-screen bg-slate-950 text-white">
 
       {/* Header */}
       <header className="sticky top-0 z-50 bg-slate-900 border-b border-solid border-blue-500">
@@ -189,7 +191,7 @@ export default function MainPage() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-8 py-8">
+      <div className="Daddy max-w-7xl mx-auto px-8 py-8">
         {/* Category Filter */}
         <div className="mb-8">
           <p className="text-gray-400 text-sm mb-3 font-medium">Category</p>
@@ -253,6 +255,10 @@ export default function MainPage() {
         </div>
       </div>
       
+
+
     </div>
+
+
   )
 }
