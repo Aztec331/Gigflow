@@ -167,6 +167,7 @@ export default function MainPage() {
         <div className="max-w-7xl mx-auto px-8">
           <h2 className="text-3xl font-bold mb-6">Find Your Next Project</h2>
           <div className="flex gap-3">
+            
             <div className="flex-1 relative">
               <Search className="absolute left-4 top-3.5 text-gray-500 w-5 h-5" />
               <input
@@ -177,9 +178,11 @@ export default function MainPage() {
                 className="w-full pl-12 px-4 py-3 bg-slate-800 border border-blue-500 border-opacity-30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-400 text-sm"
               />
             </div>
+            
             <button className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-lg font-medium text-sm transition-colors flex items-center gap-2">
               <Plus className="w-4 h-4" /> Post Gig
             </button>
+
           </div>
         </div>
 
