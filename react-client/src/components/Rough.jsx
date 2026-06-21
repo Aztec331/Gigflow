@@ -9,123 +9,204 @@ export default function MainPage() {
 
   const categories = ["All", "Web Development", "Design", "DevOps", "Mobile", "AI/ML"]
 
-  const [gigs] = useState([
-    {
-      id: 1,
-      title: "React Dashboard Development",
-      description: "Build an analytics dashboard with React and TypeScript",
-      budget: 5000,
-      category: "Web Development",
-      level: "Intermediate",
-      bids: 3
-    },
-    {
-      id: 2,
-      title: "UI/UX Design for SaaS",
-      description: "Design user interface for project management tool",
-      budget: 3000,
-      category: "Design",
-      level: "Expert",
-      bids: 7
-    },
-    {
-      id: 3,
-      title: "Node.js REST API",
-      description: "Create scalable REST API with authentication",
-      budget: 6000,
-      category: "Web Development",
-      level: "Intermediate",
-      bids: 5
-    },
-    {
-      id: 4,
-      title: "Database Schema Design",
-      description: "Design PostgreSQL database for enterprise e-commerce",
-      budget: 2500,
-      category: "Web Development",
-      level: "Expert",
-      bids: 2
-    },
-    {
-      id: 5,
-      title: "Flutter App Development",
-      description: "Build iOS and Android app for fitness tracking",
-      budget: 8000,
-      category: "Mobile",
-      level: "Intermediate",
-      bids: 4
-    },
-    {
-      id: 6,
-      title: "DevOps Pipeline Setup",
-      description: "Setup CI/CD with GitHub Actions and Docker",
-      budget: 4500,
-      category: "DevOps",
-      level: "Expert",
-      bids: 2
-    },
-    {
-      id: 7,
-      title: "Vue.js Component Library",
-      description: "Create reusable component library for UI",
-      budget: 4000,
-      category: "Web Development",
-      level: "Intermediate",
-      bids: 6
-    },
-    {
-      id: 8,
-      title: "GraphQL API Development",
-      description: "Build GraphQL server with Node.js and Apollo",
-      budget: 7000,
-      category: "Web Development",
-      level: "Expert",
-      bids: 3
-    },
-    {
-      id: 9,
-      title: "React Native Mobile App",
-      description: "Develop cross-platform food delivery application",
-      budget: 9000,
-      category: "Mobile",
-      level: "Intermediate",
-      bids: 5
-    },
-    {
-      id: 10,
-      title: "Brand Identity Design",
-      description: "Create complete brand identity system",
-      budget: 3500,
-      category: "Design",
-      level: "Expert",
-      bids: 8
-    },
-    {
-      id: 11,
-      title: "Kubernetes Setup",
-      description: "Setup and configure Kubernetes clusters",
-      budget: 5500,
-      category: "DevOps",
-      level: "Expert",
-      bids: 1
-    },
-    {
-      id: 12,
-      title: "Machine Learning Model",
-      description: "Build ML model for text classification",
-      budget: 8500,
-      category: "AI/ML",
-      level: "Expert",
-      bids: 4
-    }
-  ])
+const [gigs] = useState([
+  // WEB DEVELOPMENT
+  {
+    id: 1,
+    title: "Fix Contact Form Bug",
+    description: "Resolve validation issues in React contact form",
+    budget: 1000,
+    category: "Web Development",
+    level: "Easy",
+    bids: 2
+  },
+  {
+    id: 2,
+    title: "Admin Dashboard",
+    description: "Build analytics dashboard using React and Chart.js",
+    budget: 6500,
+    category: "Web Development",
+    level: "Intermediate",
+    bids: 5
+  },
+  {
+    id: 3,
+    title: "Node.js REST API",
+    description: "Create scalable REST API with authentication",
+    budget: 6000,
+    category: "Web Development",
+    level: "Intermediate",
+    bids: 5
+  },
+  {
+    id: 4,
+    title: "GraphQL API Development",
+    description: "Build GraphQL server with Node.js and Apollo",
+    budget: 7000,
+    category: "Web Development",
+    level: "Expert",
+    bids: 3
+  },
+
+  // DESIGN
+  {
+    id: 5,
+    title: "Logo for Coffee Shop",
+    description: "Need a simple logo for local coffee business",
+    budget: 1200,
+    category: "Design",
+    level: "Easy",
+    bids: 11
+  },
+  {
+    id: 6,
+    title: "Landing Page Design",
+    description: "Design a modern landing page for startup",
+    budget: 1800,
+    category: "Design",
+    level: "Intermediate",
+    bids: 4
+  },
+  {
+    id: 7,
+    title: "Figma Design System",
+    description: "Create reusable components and style guide",
+    budget: 4000,
+    category: "Design",
+    level: "Intermediate",
+    bids: 4
+  },
+  {
+    id: 8,
+    title: "Brand Identity Design",
+    description: "Create complete brand identity system",
+    budget: 3500,
+    category: "Design",
+    level: "Expert",
+    bids: 8
+  },
+
+  // DEVOPS
+  {
+    id: 9,
+    title: "Docker Setup",
+    description: "Containerize an existing Node.js application",
+    budget: 1500,
+    category: "DevOps",
+    level: "Easy",
+    bids: 6
+  },
+  {
+    id: 10,
+    title: "Dockerize FastAPI Project",
+    description: "Containerize existing FastAPI application",
+    budget: 3000,
+    category: "DevOps",
+    level: "Intermediate",
+    bids: 3
+  },
+  {
+    id: 11,
+    title: "CI/CD Pipeline Setup",
+    description: "Setup GitHub Actions deployment workflow",
+    budget: 4500,
+    category: "DevOps",
+    level: "Intermediate",
+    bids: 2
+  },
+  {
+    id: 12,
+    title: "Kubernetes Setup",
+    description: "Setup and configure Kubernetes clusters",
+    budget: 5500,
+    category: "DevOps",
+    level: "Expert",
+    bids: 1
+  },
+
+  // MOBILE
+  {
+    id: 13,
+    title: "Bug Fix in Mobile App",
+    description: "Fix crash issue occurring on Android devices",
+    budget: 2000,
+    category: "Mobile",
+    level: "Easy",
+    bids: 6
+  },
+  {
+    id: 14,
+    title: "Flutter App Development",
+    description: "Build iOS and Android app for fitness tracking",
+    budget: 8000,
+    category: "Mobile",
+    level: "Intermediate",
+    bids: 4
+  },
+  {
+    id: 15,
+    title: "React Native Mobile App",
+    description: "Develop cross-platform food delivery application",
+    budget: 9000,
+    category: "Mobile",
+    level: "Intermediate",
+    bids: 5
+  },
+  {
+    id: 16,
+    title: "Banking App Development",
+    description: "Build secure banking application with biometrics",
+    budget: 12000,
+    category: "Mobile",
+    level: "Expert",
+    bids: 2
+  },
+
+  // AI/ML
+  {
+    id: 17,
+    title: "Dataset Cleanup",
+    description: "Clean and prepare dataset for training",
+    budget: 1800,
+    category: "AI/ML",
+    level: "Easy",
+    bids: 7
+  },
+  {
+    id: 18,
+    title: "Chatbot for Website",
+    description: "Integrate AI chatbot into company website",
+    budget: 7500,
+    category: "AI/ML",
+    level: "Intermediate",
+    bids: 2
+  },
+  {
+    id: 19,
+    title: "Sentiment Analysis Model",
+    description: "Analyze customer reviews using NLP",
+    budget: 6500,
+    category: "AI/ML",
+    level: "Intermediate",
+    bids: 4
+  },
+  {
+    id: 20,
+    title: "Computer Vision System",
+    description: "Build image recognition model for products",
+    budget: 10000,
+    category: "AI/ML",
+    level: "Expert",
+    bids: 1
+  }
+])
 
   const filteredGigs = gigs.filter(gig => {
 
     const matchesSearch = gig.title.toLowerCase().includes(searchQuery.toLowerCase())
     const matchesCategory = selectedCategory === "All" || gig.category === selectedCategory
     return matchesSearch && matchesCategory
-    
+
   })
 
   return (
@@ -176,6 +257,7 @@ export default function MainPage() {
                 type="text"
                 placeholder="Search gigs..."
                 value={searchQuery}
+                // value="Aditya"
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-12 px-4 py-3 bg-slate-800 border border-blue-500 border-opacity-30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-400 text-sm"
               />
@@ -192,6 +274,7 @@ export default function MainPage() {
 
       {/* Main Content */}
       <div className="Daddy max-w-7xl mx-auto px-8 py-8">
+
         {/* Category Filter */}
         <div className="mb-8">
           <p className="text-gray-400 text-sm mb-3 font-medium">Category</p>
@@ -214,22 +297,26 @@ export default function MainPage() {
 
         {/* Gigs List */}
         <div className="space-y-3">
-          {filteredGigs.length > 0 ? (
+
+          { filteredGigs.length > 0 ? (
             filteredGigs.map(gig => (
               <div
                 key={gig.id}
-                className="bg-slate-900 border border-blue-500 border-opacity-20 rounded-lg p-6 hover:border-opacity-50 hover:bg-slate-800 transition-all cursor-pointer"
+                className="CardBase bg-slate-900 border border-blue-500 border-opacity-20 rounded-lg p-6 hover:border-opacity-50 hover:bg-slate-800 transition-all cursor-pointer"
               >
-                <div className="flex justify-between items-start gap-4">
-                  <div className="flex-1">
+                <div className="bg-red-500 flex justify-between items-start gap-4">
+
+                  <div className=" flex-1">
                     <div className="flex items-center gap-3 mb-2">
                       <h3 className="text-lg font-semibold hover:text-blue-400 transition-colors">
                         {gig.title}
                       </h3>
                       <span className={`text-xs px-2 py-1 rounded ${
                         gig.level === 'Expert' 
-                          ? 'bg-amber-500 bg-opacity-20 text-amber-300'
-                          : 'bg-emerald-500 bg-opacity-20 text-emerald-300'
+                          ? 'bg-red-500 bg-opacity-20 text-red-300'
+                          : gig.level === 'Intermediate'
+                          ? 'bg-yellow-500 bg-opacity-20 text-yellow-300'
+                          : 'bg-green-500 bg-opacity-20 text-green-300'
                       }`}>
                         {gig.level}
                       </span>
@@ -241,18 +328,23 @@ export default function MainPage() {
                       <span className="text-blue-400 font-semibold">₹{gig.budget.toLocaleString()}</span>
                     </div>
                   </div>
+
                   <button className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap">
                     View
                   </button>
+                  
                 </div>
+
               </div>
             ))
           ) : (
             <div className="text-center py-12">
               <p className="text-gray-500">No gigs found matching your search</p>
             </div>
-          )}
+          ) }
+          
         </div>
+
       </div>
       
 
