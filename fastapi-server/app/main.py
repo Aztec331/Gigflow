@@ -1,9 +1,8 @@
 from fastapi import FastAPI
 from app.routes.auth_routes import router as auth_router
 from app.database import engine, Base
-from app.models.user_model import User
+from app.models.user_model import User, Gig
 from fastapi.middleware.cors import CORSMiddleware
-
 
 Base.metadata.create_all(bind=engine)
 
