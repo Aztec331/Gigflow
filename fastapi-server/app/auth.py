@@ -19,8 +19,23 @@ def create_access_token(data: dict):
     # }
     to_encode = data.copy()
 
-    #datetime.now is 10:00 AM + timedelta( minutes=ACCESS_TOKEN_EXPIRE_MINUTES) is 30
-    # expire becomes 10:30 AM, Token should expire in 30 mins
+    # Suppose current UTC time is:
+    # datetime.datetime(2026, 6, 24, 10, 0, 0)
+
+    # ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+    # timedelta(minutes=30) creates a duration of 30 minutes
+
+    # So Python does:
+    # datetime.datetime(2026, 6, 24, 10, 0, 0)
+    # +
+    # timedelta(minutes=30)
+
+    # Result:
+    # datetime.datetime(2026, 6, 24, 10, 30, 0)
+
+    # This exact date & time is stored in expire
+    # Meaning: the JWT token should stop working at 10:30 AM UTC
     expire = datetime.utcnow() + timedelta(
         minutes=ACCESS_TOKEN_EXPIRE_MINUTES
     )
