@@ -4,6 +4,7 @@ from app.schemas.user_schema import UserRegister, UserLogin, UserRegisterRespons
 from app.crud.user_crud import create_user
 from app.database import get_db
 from app.models.user_model import User
+from app.auth import create_access_token
 
 router = APIRouter()
 
