@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from app.routes.auth_routes import router as auth_router
+from app.routes.gig_routes import router as gig_router
 from app.database import engine, Base
-from app.models.user_model import User, Gig
+from app.models.user_model import User
+from app.models.gig_model import Gig
 from fastapi.middleware.cors import CORSMiddleware
 
 Base.metadata.create_all(bind=engine)
@@ -19,6 +21,11 @@ app.add_middleware(
 app.include_router(
     auth_router,
     prefix="/api/auth"
+)
+
+app.include_router(
+    gig_router,
+    prefix="/api/gigs"
 )
 
 @app.get("/")

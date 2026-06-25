@@ -12,11 +12,11 @@ router = APIRouter()
         "/register",
         response_model=UserRegisterResponse)
 def register(
-    user: UserRegister,
+    user_data: UserRegister,
     db: Session = Depends(get_db)
 ):
     
-    return create_user(db,user)
+    return create_user(db,user_data)
 
 # `UserLogin` is the Pydantic model/class that defines the expected login data
 # `user` is the object (instance of `UserLogin`) created from the incoming request body
@@ -24,11 +24,11 @@ def register(
         "/login",
         response_model=UserLoginResponse)
 def login(
-    user: UserLogin,
+    user_data: UserLogin,
     db: Session = Depends(get_db)
 ):
     # 1. Find user by email
-    db_user = db.query(User).filter(User.email == user.email).first()
+    db_user = db.query(User).filter(User.email == user_data.email).first()
     
     # 2. Check if user exists
     if not db_user:
@@ -38,15 +38,22 @@ def login(
         )
     
     # 3. Verify password matches
-    if db_user.password != user.password:
+    if db_user.password != user_data.password:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid email or password"
         )
     
-    # 4. Return success with user data
+    # 4. Generate JWT token
+    access_token = create_access_token(
+        data={"sub": str(db_user.id)}
+    )
+    
+    # 5. Return success with user data
     return {
         "message": "User logged in successfully",
+        "access_token": access_token,
+        "token_type": "bearer",
         "user": {
             "id": db_user.id,
             "name": db_user.name,
