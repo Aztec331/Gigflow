@@ -2,7 +2,6 @@ from sqlalchemy.orm import Session
 from app.models.gig_model import Gig
 from app.schemas.gig_schema import GigCreate
 
-
 def create_gig(
     db: Session,
     gig_data: GigCreate,
