@@ -220,27 +220,27 @@ const [gigs] = useState([
       
       <div className="Daddy max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
 
-        <h1 className="text-2xl font-bold">GigFlow</h1>
+        <h1 className="text-2xl font-bold cursor-pointer">GigFlow</h1>
 
         <nav className="flex gap-8 items-center">
 
-          <button className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-sm">
+          <button className="flex items-center gap-2 text-gray-300 hover:text-white hover:scale-105 cursor-pointer transition-colors text-sm">
             <Briefcase className="w-4 h-4" />
             Browse
           </button>
-          <button className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-sm">
+          <button className="flex items-center gap-2 text-gray-300 hover:text-white hover:scale-105 cursor-pointer transition-colors text-sm">
              <TrendingUp className="w-4 h-4" />
             My Bids
           </button>
 
-          <button className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-sm">
+          <button className="flex items-center gap-2 text-gray-300 hover:text-white hover:scale-105 cursor-pointer transition-colors text-sm">
             <MessageSquare className="w-4 h-4" />
             Messages
           </button>
 
           <button 
           onClick={() => navigate("/auth")}
-          className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-sm">
+          className="flex items-center gap-2 text-gray-300 hover:text-white hover:scale-105 cursor-pointer transition-colors text-sm">
             <User className="w-4 h-4" />
             User
           </button>
@@ -257,7 +257,7 @@ const [gigs] = useState([
 
       {/* max-w-7xl means 1280px */}
       <div className="Daddy max-w-7xl mx-auto px-8">
-        <h1 className="text-3xl font-bold mb-6">Find Your Next Project</h1>
+        <h1 className="text-3xl font-bold mb-6">Find Your <span className="text-blue-600">Next</span> Project</h1>
 
         <div className="Little_flex_father flex gap-3">
 
@@ -323,28 +323,39 @@ const [gigs] = useState([
 
           <div
           key={gig.id}
-          className="CardBase bg-slate-900 hover:bg-slate-800 border border-blue-500 border-opacity-2 rounded-lg p-6 hover:border-opacity-50 transition-all cursor-pointer"
+          className="CardBase hover:bg-slate-800 border border-blue-500 border-opacity-2 rounded-lg p-6 hover:border-opacity-50 transition-all cursor-pointer"
           >
-            <div className="flex justify-between ">
-
-              <div className="1stChildInfo">
+            <div className="flexFather flex justify-between items-start">
 
 
-              {gig.title}
+              <div className="flexChild1">
+                <div className="flex items-center gap-3 mb-2">
+                <h3 className="text-lg font-semibold hover:text-blue-400 transition-colors">
+                  {gig.title}
+                </h3>
+                <span className={`text-xs px-2 py-1 rounded ${
+                  gig.level === 'Expert'
+                  ? 'bg-red-500 bg-opacity-20 text-red-300'
+                  : gig.level === 'Intermediate'
+                  ? 'bg-yellow-500 bg-opacity-20 text-yellow-300'
+                  : 'bg-green-500 bg-opacity-20 text-green-300'
+                }`}>
+                  {gig.level}
+                </span>
+                </div>
 
+                <p className="text-gray-400 text-sm mb-4">{gig.description}</p>
 
-
+                <div className="flex gap-6 items-center text-sm">
+                  <span className="text-gray-500">{gig.category}</span>
+                  <span className="text-gray-500">{gig.bids} bids</span>
+                  <span className="text-blue-400 font-semibold">₹{gig.budget.toLocaleString()}</span>
+                </div>
               </div>
 
-
-              <button className="2ndChildButton bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap">
+              <button className="flexChild2 bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap">
                 View
               </button>
-
-
-
-
-
 
 
             </div>
