@@ -13,12 +13,16 @@ router = APIRouter()
 
 # Looks for:
 # Authorization: Bearer <JWT_TOKEN>
+# oauth2_scheme contains OAuth2PasswordBearer object
+# and not a token like eyJhbGciOiJIUzI1NiIs...
 oauth2_scheme = OAuth2PasswordBearer(
     tokenUrl="/api/auth/login"
 )
 
 
 # Extract logged-in user from JWT
+# token variable here in parameter finally contains
+# something like this - "eyJhbGc123..."
 def get_current_user(
     token: str = Depends(oauth2_scheme),
     db: Session = Depends(get_db)
@@ -33,14 +37,28 @@ def get_current_user(
         )
 
         # Read "sub"
+        # "sub" means subject (the user's ID)
+        # Example:
+        # {"sub": "5"} -> user_id = "5"
         user_id = payload.get("sub")
 
+        # If the decoded JWT doesn't contain a user ID ("sub"),
+        # we don't know which user is making the request,
+        # so reject the request.
         if user_id is None:
             raise HTTPException(
                 status_code=401,
                 detail="Invalid token"
             )
 
+    # If jwt.decode() fails, it means the JWT could not be
+    # verified using our SECRET_KEY and algorithm.
+    # This can happen if someone sends:
+    # - a fake token
+    # - a tampered/modified token
+    # - a malformed token
+    # - an expired token
+    # In all these cases, reject the request.
     except JWTError:
         raise HTTPException(
             status_code=401,
@@ -58,6 +76,13 @@ def get_current_user(
             detail="User not found"
         )
 
+    # db_user holds a User object
+    # User(
+    # id=1,
+    # name="Aztec",
+    # email="aztec@gmail.com",
+    # password="123456"
+    # )
     return db_user
 
 
