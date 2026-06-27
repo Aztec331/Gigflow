@@ -60,7 +60,7 @@ export default function AuthPage() {
       })
       console.log('Login success:', response.data)
       setFormData({ name: "", email: "", password: "", confirmPassword: "" })
-      navigate("/")
+      navigate("/main")
     }
   }
 

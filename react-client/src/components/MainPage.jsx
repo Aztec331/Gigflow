@@ -1,206 +1,17 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Search, Plus, MessageSquare, User, Briefcase, TrendingUp } from "lucide-react"
+import { getAllGigs } from "../api/gigs"
 
 export default function MainPage() {
 
   const[searchQuery, setSearchQuery] = useState("")
   const[selectedCategory, setSelectedCategory] = useState("All")
+  const[gigs, setGigs] = useState([])
+  const[loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
   const categories = ["All", "Web Development", "Design", "DevOps", "Mobile", "AI/ML"]
-
-const [gigs] = useState([
-  // WEB DEVELOPMENT
-  {
-    id: 1,
-    title: "Fix Contact Form Bug",
-    description: "Resolve validation issues in React contact form",
-    budget: 1000,
-    category: "Web Development",
-    level: "Easy",
-    bids: 2
-  },
-  {
-    id: 2,
-    title: "Admin Dashboard",
-    description: "Build analytics dashboard using React and Chart.js",
-    budget: 6500,
-    category: "Web Development",
-    level: "Intermediate",
-    bids: 5
-  },
-  {
-    id: 3,
-    title: "Node.js REST API",
-    description: "Create scalable REST API with authentication",
-    budget: 6000,
-    category: "Web Development",
-    level: "Intermediate",
-    bids: 5
-  },
-  {
-    id: 4,
-    title: "GraphQL API Development",
-    description: "Build GraphQL server with Node.js and Apollo",
-    budget: 7000,
-    category: "Web Development",
-    level: "Expert",
-    bids: 3
-  },
-
-  // DESIGN
-  {
-    id: 5,
-    title: "Logo for Coffee Shop",
-    description: "Need a simple logo for local coffee business",
-    budget: 1200,
-    category: "Design",
-    level: "Easy",
-    bids: 11
-  },
-  {
-    id: 6,
-    title: "Landing Page Design",
-    description: "Design a modern landing page for startup",
-    budget: 1800,
-    category: "Design",
-    level: "Intermediate",
-    bids: 4
-  },
-  {
-    id: 7,
-    title: "Figma Design System",
-    description: "Create reusable components and style guide",
-    budget: 4000,
-    category: "Design",
-    level: "Intermediate",
-    bids: 4
-  },
-  {
-    id: 8,
-    title: "Brand Identity Design",
-    description: "Create complete brand identity system",
-    budget: 3500,
-    category: "Design",
-    level: "Expert",
-    bids: 8
-  },
-
-  // DEVOPS
-  {
-    id: 9,
-    title: "Docker Setup",
-    description: "Containerize an existing Node.js application",
-    budget: 1500,
-    category: "DevOps",
-    level: "Easy",
-    bids: 6
-  },
-  {
-    id: 10,
-    title: "Dockerize FastAPI Project",
-    description: "Containerize existing FastAPI application",
-    budget: 3000,
-    category: "DevOps",
-    level: "Intermediate",
-    bids: 3
-  },
-  {
-    id: 11,
-    title: "CI/CD Pipeline Setup",
-    description: "Setup GitHub Actions deployment workflow",
-    budget: 4500,
-    category: "DevOps",
-    level: "Intermediate",
-    bids: 2
-  },
-  {
-    id: 12,
-    title: "Kubernetes Setup",
-    description: "Setup and configure Kubernetes clusters",
-    budget: 5500,
-    category: "DevOps",
-    level: "Expert",
-    bids: 1
-  },
-
-  // MOBILE
-  {
-    id: 13,
-    title: "Bug Fix in Mobile App",
-    description: "Fix crash issue occurring on Android devices",
-    budget: 2000,
-    category: "Mobile",
-    level: "Easy",
-    bids: 6
-  },
-  {
-    id: 14,
-    title: "Flutter App Development",
-    description: "Build iOS and Android app for fitness tracking",
-    budget: 8000,
-    category: "Mobile",
-    level: "Intermediate",
-    bids: 4
-  },
-  {
-    id: 15,
-    title: "React Native Mobile App",
-    description: "Develop cross-platform food delivery application",
-    budget: 9000,
-    category: "Mobile",
-    level: "Intermediate",
-    bids: 5
-  },
-  {
-    id: 16,
-    title: "Banking App Development",
-    description: "Build secure banking application with biometrics",
-    budget: 12000,
-    category: "Mobile",
-    level: "Expert",
-    bids: 2
-  },
-
-  // AI/ML
-  {
-    id: 17,
-    title: "Dataset Cleanup",
-    description: "Clean and prepare dataset for training",
-    budget: 1800,
-    category: "AI/ML",
-    level: "Easy",
-    bids: 7
-  },
-  {
-    id: 18,
-    title: "Chatbot for Website",
-    description: "Integrate AI chatbot into company website",
-    budget: 7500,
-    category: "AI/ML",
-    level: "Intermediate",
-    bids: 2
-  },
-  {
-    id: 19,
-    title: "Sentiment Analysis Model",
-    description: "Analyze customer reviews using NLP",
-    budget: 6500,
-    category: "AI/ML",
-    level: "Intermediate",
-    bids: 4
-  },
-  {
-    id: 20,
-    title: "Computer Vision System",
-    description: "Build image recognition model for products",
-    budget: 10000,
-    category: "AI/ML",
-    level: "Expert",
-    bids: 1
-  }
-])
 
   const filteredGigs = gigs.filter( gig => {
 
@@ -209,6 +20,8 @@ const [gigs] = useState([
     return matchesSearch && matchesCategory
 
   })
+
+  
 
 
   return (
@@ -274,7 +87,9 @@ const [gigs] = useState([
             
           </div>
           
-          <button className="child_2_Of_Flex bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-lg font-medium text-sm transition-colors flex items-center gap-2">
+          <button
+          onClick={() => navigate("/post-gig")}
+          className="child_2_Of_Flex bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-lg font-medium text-sm transition-colors flex items-center gap-2 cursor-pointer">
             <Plus className="w-4 h-4" /> Post a Gig
           </button>
 
