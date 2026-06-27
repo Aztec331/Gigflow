@@ -14,10 +14,12 @@ export const postGig = (gigData, token) => {
     return api.post(
         '/api/gigs/',
         gigData,
+        
         {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         }
+        
     )
 }

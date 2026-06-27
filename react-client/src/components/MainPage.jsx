@@ -21,7 +21,35 @@ export default function MainPage() {
 
   })
 
-  
+  useEffect(() => {
+
+    const fetchGigs = async () => {
+
+        try {
+
+            const response = await getAllGigs()
+
+            setGigs(response.data)
+
+        }
+
+        catch (error) {
+
+            console.error(error)
+
+        }
+
+        finally {
+
+            setLoading(false)
+
+        }
+
+    }
+
+    fetchGigs()
+
+  }, [])
 
 
   return (
@@ -133,7 +161,17 @@ export default function MainPage() {
 
       {/* Gigs list */}
       <div className="space-y-3">
-        { filteredGigs.length > 0 ? (
+        { 
+        loading ? (
+
+        <div className="text-center py-12">
+            <p className="text-gray-500">Loading gigs...</p>
+        </div>
+
+        ) :
+        
+        
+          filteredGigs.length > 0 ? (
           filteredGigs.map(gig =>(
 
           <div
@@ -190,9 +228,9 @@ export default function MainPage() {
             <p className="text-gray-500">No gigs found matching your search</p>
           </div>
 
-        )}
+        ) }
 
-
+      
       </div>
 
     
