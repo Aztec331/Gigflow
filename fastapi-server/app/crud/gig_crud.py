@@ -22,3 +22,8 @@ def create_gig(
     db.refresh(new_gig)
 
     return new_gig
+
+def get_all_gigs(
+    db: Session
+):
+    return db.query(Gig).all()

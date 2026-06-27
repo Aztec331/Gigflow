@@ -2,11 +2,12 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from jose import jwt, JWTError
 from fastapi.security import OAuth2PasswordBearer
+from typing import List
 
 from app.database import get_db
 from app.models.user_model import User
 from app.schemas.gig_schema import GigCreate, GigResponse
-from app.crud.gig_crud import create_gig
+from app.crud.gig_crud import create_gig, get_all_gigs
 from app.auth import SECRET_KEY, ALGORITHM
 
 router = APIRouter()
@@ -86,6 +87,9 @@ def get_current_user(
     return db_user
 
 
+# gig_data: GigCreate- gig object with data
+# db: Session = Depends(get_db)- db session object to talk to db
+# current_user: User = Depends(get_current_user)- User object of currently logged in user
 @router.post(
     "/",
     response_model=GigResponse
@@ -101,3 +105,12 @@ def post_gig(
         gig_data,
         current_user.id
     )
+
+@router.get(
+    "/",
+    response_model=List[GigResponse]
+)
+def get_gigs(
+    db:Session = Depends(get_db)
+):
+    return get_all_gigs(db)
