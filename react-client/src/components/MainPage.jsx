@@ -24,7 +24,6 @@ export default function MainPage() {
   useEffect(() => {
 
     const fetchGigs = async () => {
-
         try {
 
             const response = await getAllGigs()
@@ -44,7 +43,6 @@ export default function MainPage() {
             setLoading(false)
 
         }
-
     }
 
     fetchGigs()

@@ -59,7 +59,19 @@ export default function AuthPage() {
         password: formData.password
       })
       console.log('Login success:', response.data)
-      setFormData({ name: "", email: "", password: "", confirmPassword: "" })
+
+      // Save JWT token in browser
+      localStorage.setItem(
+          "token",
+          response.data.access_token
+      )
+
+      setFormData({ 
+        name: "", 
+        email: "", 
+        password: "", 
+        confirmPassword: "" })
+
       navigate("/main")
     }
   }

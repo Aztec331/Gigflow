@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { postGig } from "../api/gigs"
 import { useNavigate } from "react-router-dom"
 import { Briefcase, TrendingUp, MessageSquare, User, ArrowLeft } from "lucide-react"
 
@@ -29,6 +30,7 @@ export default function PostGigPage() {
   }
 
   const handleSubmit = async (e) => {
+
     e.preventDefault()
     setError("")
 
@@ -39,15 +41,24 @@ export default function PostGigPage() {
 
     try {
       setLoading(true)
-      // API call will go here
-      console.log("Gig posted:", formData)
+
+      // Read JWT from browser
+      const token = localStorage.getItem("token")
+
+      // Send gig to FastAPI
+      await postGig(formData, token)
+
       navigate("/main")
-    } catch (err) {
+    } 
+    catch (err) {
       setError(err.response?.data?.detail || "Something went wrong")
-    } finally {
+    } 
+    finally {
       setLoading(false)
     }
+
   }
+
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
