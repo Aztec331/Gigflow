@@ -40,6 +40,7 @@ export default function PostGigPage() {
     }
 
     try {
+
       setLoading(true)
 
       // Read JWT from browser
@@ -49,6 +50,7 @@ export default function PostGigPage() {
       await postGig(formData, token)
 
       navigate("/main")
+      
     } 
     catch (err) {
       setError(err.response?.data?.detail || "Something went wrong")
