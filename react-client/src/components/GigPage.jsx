@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom"
 import { Briefcase, TrendingUp, MessageSquare, User, ArrowLeft, IndianRupee } from "lucide-react"
 import { getGigById } from "../api/gigs"
 
-export default function Rough() {
+export default function GigPage() {
 
   const { gigId } = useParams()
   const navigate = useNavigate()
@@ -72,7 +72,7 @@ export default function Rough() {
       </header>
 
       {/* Main Content */}
-      <div className="bg-red-500 max-w-3xl mx-auto px-8 py-12">
+      <div className="max-w-3xl mx-auto px-8 py-12">
 
         {/* Back button */}
         <button
@@ -84,17 +84,21 @@ export default function Rough() {
         </button>
 
         {loading ? (
+
           <div className="text-center py-12">
             <p className="text-gray-500">Loading gig...</p>
           </div>
+
         ) : error ? (
+
           <div className="text-center py-12">
             <p className="text-gray-500">{error}</p>
           </div>
+
         ) : (
 
           <div className="bg-slate-900 border border-blue-500 rounded-2xl p-8">
-            
+
             {/* Title + Level */}
             <div className="flex items-center gap-3 mb-4">
               <h2 className="text-3xl font-bold">{gig.title}</h2>
@@ -105,7 +109,7 @@ export default function Rough() {
                 ? 'bg-yellow-500 bg-opacity-20 text-yellow-300'
                 : 'bg-green-500 bg-opacity-20 text-green-300'
               }`}>
-              {gig.level}
+                {gig.level}
               </span>
             </div>
 
@@ -133,7 +137,6 @@ export default function Rough() {
               </p>
             </div>
 
-
             {/* Bid button */}
             <div className="flex justify-end">
               <button
@@ -143,58 +146,27 @@ export default function Rough() {
               </button>
             </div>
 
-
-
-
           </div>
 
         )}
 
-
-
-
-
-
       </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
     </div>
   )
-
-
-
 }

@@ -159,8 +159,7 @@ export default function MainPage() {
 
       {/* Gigs list */}
       <div className="space-y-3">
-        { 
-        loading ? (
+        {loading ? (
 
         <div className="text-center py-12">
             <p className="text-gray-500">Loading gigs...</p>
@@ -204,7 +203,9 @@ export default function MainPage() {
                 </div>
               </div>
 
-              <button className="flexChild2 bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap">
+              <button 
+              onClick={ () => navigate(`/gigs/${gig.id}`) }
+              className="flexChild2 bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap">
                 View
               </button>
 

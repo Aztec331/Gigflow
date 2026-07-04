@@ -10,6 +10,10 @@ export const getAllGigs = () => {
     return api.get('/api/gigs/')
 }
 
+export const getGigById = (gigId) => {
+    return api.get(`/api/gigs/${gigId}/`)
+}
+
 export const postGig = (gigData, token) => {
     return api.post(
         '/api/gigs/',
@@ -23,3 +27,4 @@ export const postGig = (gigData, token) => {
         
     )
 }
+
