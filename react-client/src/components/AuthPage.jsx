@@ -66,6 +66,12 @@ export default function AuthPage() {
           response.data.access_token
       )
 
+      // Save user info(id,name,email) in localStorage
+      localStorage.setItem(
+          "user",
+          JSON.stringify(response.data.user)
+      )
+
       setFormData({ 
         name: "", 
         email: "", 

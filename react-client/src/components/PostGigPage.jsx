@@ -3,6 +3,7 @@ import { postGig } from "../api/gigs"
 import { useNavigate } from "react-router-dom"
 import { Briefcase, TrendingUp, MessageSquare, User, ArrowLeft } from "lucide-react"
 
+
 export default function PostGigPage() {
 
   const navigate = useNavigate()
@@ -68,7 +69,7 @@ export default function PostGigPage() {
       {/* Header */}
       <header className="bg-slate-900 sticky top-0 z-50 border-b-2 border-solid border-blue-500">
         <div className="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold cursor-pointer" onClick={() => navigate("/")}>GigFlow</h1>
+          <h1 className="text-2xl font-bold cursor-pointer" onClick={() => navigate("/main")}>GigFlow</h1>
           <nav className="flex gap-8 items-center">
             <button onClick={() => navigate("/")} className="flex items-center gap-2 text-gray-300 hover:text-white hover:scale-105 cursor-pointer transition-all text-sm">
               <Briefcase className="w-4 h-4" />

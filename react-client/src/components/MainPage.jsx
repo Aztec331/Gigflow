@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { Search, Plus, MessageSquare, User, Briefcase, TrendingUp } from "lucide-react"
+import { Search, Plus, MessageSquare, User, Briefcase, TrendingUp, LogOut } from "lucide-react"
 import { getAllGigs } from "../api/gigs"
 
 export default function MainPage() {
@@ -10,6 +10,7 @@ export default function MainPage() {
   const[gigs, setGigs] = useState([])
   const[loading, setLoading] = useState(true)
   const navigate = useNavigate()
+  const user = JSON.parse(localStorage.getItem("user"))
 
   const categories = ["All", "Web Development", "Design", "DevOps", "Mobile", "AI/ML"]
 
@@ -77,11 +78,26 @@ export default function MainPage() {
             Messages
           </button>
 
-          <button 
-          onClick={() => navigate("/auth")}
-          className="flex items-center gap-2 text-gray-300 hover:text-white hover:scale-105 cursor-pointer transition-colors text-sm">
-            <User className="w-4 h-4" />
-            User
+          {/* User Profile Badge */}
+          <div className="flex items-center gap-2 bg-slate-800 border border-blue-500 border-opacity-30 px-3 py-1.5 rounded-lg">
+            <div className="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold">
+              {user?.name?.charAt(0).toUpperCase() || "G"}
+            </div>
+            <span className="text-sm text-white font-medium">{user?.name || "Guest"}</span>
+          </div>
+
+
+        {/* Logout button */}
+          <button
+            onClick={() => {
+              localStorage.removeItem("token")
+              localStorage.removeItem("user")
+              navigate("/auth")
+            }}
+            className="flex items-center gap-2 text-red-400 hover:text-red-300 hover:scale-105 cursor-pointer transition-all text-sm"
+          >
+            <LogOut className="w-4 h-4" />
+            Logout
           </button>
 
         </nav>

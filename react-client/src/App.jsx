@@ -16,7 +16,7 @@ function App() {
         <Route path="/main" element={<MainPage />} />
         <Route path="/post-gig" element={<PostGigPage />} />
         <Route path="/gigs/:gigId" element={<GigPage />} />
-        <Route path="/rough/:gigId" element={<Rough />} />
+        <Route path="/rough" element={<Rough />} />
       </Routes>
 
     </BrowserRouter>
