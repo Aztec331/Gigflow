@@ -210,11 +210,16 @@ export default function MainPage() {
                 </span>
                 </div>
 
-                <p className="text-gray-400 text-sm mb-4">{gig.description}</p>
+                <p className="text-gray-400 text-sm mb-4">
+                  {gig.description.length > 100 
+                  ? gig.description.substring(0,70)+"..."
+                  : gig.description}
+                </p>
 
                 <div className="flex gap-6 items-center text-sm">
-                  <span className="text-gray-500">{gig.category}</span>
-                  <span className="text-gray-500">{gig.bids} bids</span>
+                  <span className="text-gray-500 font-semibold">{gig.category}</span>
+                  <span className="text-blue-400 font-semibold">👤{gig.owner_name}</span>
+                  <span className="text-gray-500 font-semibold">{gig.bids} bids</span>
                   <span className="text-blue-400 font-semibold">₹{gig.budget.toLocaleString()}</span>
                 </div>
               </div>

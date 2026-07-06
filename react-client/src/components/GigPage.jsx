@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import { Briefcase, TrendingUp, MessageSquare, User, ArrowLeft, IndianRupee } from "lucide-react"
+import {Briefcase,TrendingUp,MessageSquare,ArrowLeft,LogOut} from "lucide-react"
 import { getGigById } from "../api/gigs"
 
 export default function GigPage() {
 
   const { gigId } = useParams()
   const navigate = useNavigate()
-
+  const user = JSON.parse(localStorage.getItem("user"))
   const [gig, setGig] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
@@ -44,32 +44,56 @@ export default function GigPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-white">
 
-      {/* Header */}
-      <header className="bg-slate-900 sticky top-0 z-50 border-b-2 border-solid border-blue-500">
-        <div className="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold cursor-pointer" onClick={() => navigate("/main")}>GigFlow</h1>
-          <nav className="flex gap-8 items-center">
-            <button onClick={() => navigate("/main")} className="flex items-center gap-2 text-gray-300 hover:text-white hover:scale-105 cursor-pointer transition-all text-sm">
-              <Briefcase className="w-4 h-4" />
-              Browse
-            </button>
-            <button className="flex items-center gap-2 text-gray-300 hover:text-white hover:scale-105 cursor-pointer transition-all text-sm">
-              <TrendingUp className="w-4 h-4" />
-              My Bids
-            </button>
-            <button className="flex items-center gap-2 text-gray-300 hover:text-white hover:scale-105 cursor-pointer transition-all text-sm">
-              <MessageSquare className="w-4 h-4" />
-              Messages
-            </button>
-            <button
-              onClick={() => navigate("/auth")}
-              className="flex items-center gap-2 text-gray-300 hover:text-white hover:scale-105 cursor-pointer transition-all text-sm">
-              <User className="w-4 h-4" />
-              User
-            </button>
-          </nav>
-        </div>
-      </header>
+      {/* Header header's bg is bg-slate-900 */}
+    <header className="BigDaddy bg-slate-900 sticky top-0 z-50 border-b-2 border-solid border-blue-500">
+      
+      <div className="Daddy max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
+
+        <h1 className="text-2xl font-bold cursor-pointer">GigFlow</h1>
+
+        <nav className="flex gap-8 items-center">
+
+          <button className="flex items-center gap-2 text-gray-300 hover:text-white hover:scale-105 cursor-pointer transition-colors text-sm">
+            <Briefcase className="w-4 h-4" />
+            Browse
+          </button>
+          <button className="flex items-center gap-2 text-gray-300 hover:text-white hover:scale-105 cursor-pointer transition-colors text-sm">
+             <TrendingUp className="w-4 h-4" />
+            My Bids
+          </button>
+
+          <button className="flex items-center gap-2 text-gray-300 hover:text-white hover:scale-105 cursor-pointer transition-colors text-sm">
+            <MessageSquare className="w-4 h-4" />
+            Messages
+          </button>
+
+          {/* User Profile Badge */}
+          <div className="flex items-center gap-2 bg-slate-800 border border-blue-500 border-opacity-30 px-3 py-1.5 rounded-lg">
+            <div className="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold">
+              {user?.name?.charAt(0).toUpperCase() || "G"}
+            </div>
+            <span className="text-sm text-white font-medium">{user?.name || "Guest"}</span>
+          </div>
+
+
+        {/* Logout button */}
+          <button
+            onClick={() => {
+              localStorage.removeItem("token")
+              localStorage.removeItem("user")
+              navigate("/auth")
+            }}
+            className="flex items-center gap-2 text-red-400 hover:text-red-300 hover:scale-105 cursor-pointer transition-all text-sm"
+          >
+            <LogOut className="w-4 h-4" />
+            Logout
+          </button>
+
+        </nav>
+
+      </div>
+
+    </header>
 
       {/* Main Content */}
       <div className="max-w-3xl mx-auto px-8 py-12">
@@ -116,6 +140,7 @@ export default function GigPage() {
             {/* Category + bids */}
             <div className="flex gap-6 items-center text-sm mb-6">
               <span className="text-gray-500">{gig.category}</span>
+              <span className="text-blue-400 font-semibold">👤{gig.owner_name}</span>
               <span className="text-gray-500 flex items-center gap-1">
                 <TrendingUp className="w-4 h-4" />
                 {gig.bids} bids
