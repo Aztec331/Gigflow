@@ -19,6 +19,7 @@ class GigResponse(BaseModel):
     category: str
     level: str
     owner_id: int
+    owner_name: str
     created_at: datetime
 
     class Config:

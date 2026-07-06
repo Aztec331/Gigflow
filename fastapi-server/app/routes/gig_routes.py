@@ -7,7 +7,11 @@ from typing import List
 from app.database import get_db
 from app.models.user_model import User
 from app.schemas.gig_schema import GigCreate, GigResponse
-from app.crud.gig_crud import create_gig, get_all_gigs
+from app.crud.gig_crud import (
+    create_gig,
+    get_all_gigs,
+    get_gig_by_id
+)
 from app.auth import SECRET_KEY, ALGORITHM
 
 router = APIRouter()
@@ -114,3 +118,26 @@ def get_gigs(
     db:Session = Depends(get_db)
 ):
     return get_all_gigs(db)
+
+
+@router.get(
+    "/{gig_id}",
+    response_model=GigResponse
+)
+def get_gig(
+    gig_id: int,
+    db: Session = Depends(get_db)
+):
+    gig = get_gig_by_id(db,gig_id)
+
+    if gig is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Gig not found"
+        )
+    
+    return gig
+    
+
+
+
