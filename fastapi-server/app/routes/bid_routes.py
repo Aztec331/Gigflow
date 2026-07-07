@@ -4,7 +4,8 @@ from jose import jwt, JWTError
 from fastapi.security import OAuth2PasswordBearer
 
 from app.database import get_db
-from app.models.user_model import User,Gig
+from app.models.user_model import User
+from app.models.gig_model import Gig
 from app.schemas.bid_schema import BidCreate, BidResponse
 from app.crud.bid_crud import create_bid
 from app.auth import SECRET_KEY, ALGORITHM
