@@ -1,6 +1,5 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime
-
 
 # Request
 class BidCreate(BaseModel):
@@ -15,7 +14,7 @@ class BidResponse(BaseModel):
     freelancer_id: int
     freelancer_name: str
     message: str
-    price: int
+    price: int = Field(gt=0)
     status: str
     created_at: datetime
 

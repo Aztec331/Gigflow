@@ -4,7 +4,7 @@ from jose import jwt, JWTError
 from fastapi.security import OAuth2PasswordBearer
 
 from app.database import get_db
-from app.models.user_model import User
+from app.models.user_model import User,Gig
 from app.schemas.bid_schema import BidCreate, BidResponse
 from app.crud.bid_crud import create_bid
 from app.auth import SECRET_KEY, ALGORITHM
@@ -92,8 +92,24 @@ def post_bid(
     gig_id: int,
     bid_data: BidCreate,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
-):
+    current_user: User = Depends(get_current_user) ):
+
+    gig = db.query(Gig).filter(
+        Gig.id == gig_id
+    ).first()
+
+    if gig is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Gig not found"
+        )
+    
+    if gig.owner_id == current_user.id:
+        raise HTTPException(
+            status_code=400,
+            detail="You cannot bid on your own gig."
+        )
+
     return create_bid(
         db,
         gig_id,
