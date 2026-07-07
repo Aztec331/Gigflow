@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import {Briefcase,TrendingUp,MessageSquare,ArrowLeft,LogOut} from "lucide-react"
+import {Briefcase,TrendingUp,MessageSquare,IndianRupee, ArrowLeft,LogOut} from "lucide-react"
 import { getGigById } from "../api/gigs"
 
 export default function GigPage() {
