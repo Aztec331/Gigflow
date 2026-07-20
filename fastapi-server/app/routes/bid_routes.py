@@ -105,6 +105,7 @@ def post_bid(
             detail="Gig not found"
         )
     
+    # if the owner ID of this gig is the same as the current user's ID
     if gig.owner_id == current_user.id:
         raise HTTPException(
             status_code=400,
