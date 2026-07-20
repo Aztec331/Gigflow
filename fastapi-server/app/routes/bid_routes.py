@@ -2,13 +2,14 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from jose import jwt, JWTError
 from fastapi.security import OAuth2PasswordBearer
+from typing import List
 
 from app.database import get_db
 from app.models.user_model import User
 from app.models.gig_model import Gig
 from app.models.bid_model import Bid
 from app.schemas.bid_schema import BidCreate, BidResponse
-from app.crud.bid_crud import create_bid
+from app.crud.bid_crud import create_bid, get_bids_by_gig
 from app.auth import SECRET_KEY, ALGORITHM
 
 router = APIRouter()
@@ -96,6 +97,20 @@ def post_bid(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user) ):
 
+    #Price should be positive
+    if bid_data.price <=0:
+        raise HTTPException(
+            status_code=400,
+            detail="Price must be greater than 0"
+        )
+    
+    #Message should not be empty
+    if not bid_data.message.strip():
+        raise HTTPException(
+            status_code=400,
+            detail= "Message cannot be empty"
+        )
+
     gig = db.query(Gig).filter(
         Gig.id == gig_id
     ).first()
@@ -114,7 +129,8 @@ def post_bid(
         )
 
     #if a freelancer or user bids on the same gig again instead of editing the gig
-    # raise error you cannot bid multiple times on the same gig    
+    # raise error you cannot bid multiple times on the same gig  
+    # Equivalent to command Select * from Bid where gig_id =5 and freelancer_id =2  
     existing_bid = db.query(Bid).filter(
         Bid.gig_id == gig_id,
         Bid.freelancer_id == current_user.id        
@@ -132,3 +148,38 @@ def post_bid(
         bid_data,
         current_user.id
     )
+
+@router.get(
+    "/gigs/{gig_id}/bids",
+    response_model=List[BidResponse]
+)
+def get_bids(
+    gig_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    #This contains the current gig object
+    #Check if gig exists
+    gig = db.query(Gig).filter(
+        Gig.id == gig_id
+    ).first()
+
+    #If gig if not found
+    if gig is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Gig not found"
+        )
+    
+    #Only the owner can view bids
+    if gig.owner_id != current_user.id:
+        raise HTTPException(
+            status_code=403,
+            detail="You are not allowed to view these bids."
+        )
+    
+    return get_bids_by_gig(
+        db,
+        gig_id
+    )
+    

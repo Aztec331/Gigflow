@@ -11,7 +11,7 @@ def create_bid(
         freelancer_id:int ):
 
     new_bid = Bid(
-        gid_id=gig_id,
+        gig_id=gig_id,
         freelancer_id=freelancer_id,
         message=bid_data.message,
         price=bid_data.price
@@ -35,5 +35,42 @@ def create_bid(
         "status": new_bid.status,
         "created_at": new_bid.created_at
     }
+
+def get_bids_by_gig(
+        db:Session,
+        gig_id: int
+):
+    
+    #Only bids of a particular gig_id
+    bids = db.query(Bid).filter(
+        Bid.gig_id == gig_id
+    ).all()
+
+    result = []
+
+    #for each bid
+    for bid in bids:
+
+        #to take out name of every bidder 
+        freelancer = db.query(User).filter(
+            User.id == bid.freelancer_id
+        ).first()
+
+        bid_dict = {
+            "id": bid.id,
+            "gig_id": bid.gig_id,
+            "freelancer_id": bid.freelancer_id,
+            "freelancer_name": freelancer.name if freelancer else "Unknown",
+            "message": bid.message,
+            "price": bid.price,
+            "status": bid.status,
+            "created_at": bid.created_at
+        }
+
+        result.append(bid_dict)
+
+    return result
+    
+    
 
 
