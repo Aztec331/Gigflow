@@ -6,6 +6,7 @@ from fastapi.security import OAuth2PasswordBearer
 from app.database import get_db
 from app.models.user_model import User
 from app.models.gig_model import Gig
+from app.models.bid_model import Bid
 from app.schemas.bid_schema import BidCreate, BidResponse
 from app.crud.bid_crud import create_bid
 from app.auth import SECRET_KEY, ALGORITHM
@@ -110,6 +111,19 @@ def post_bid(
         raise HTTPException(
             status_code=400,
             detail="You cannot bid on your own gig."
+        )
+
+    #if a freelancer or user bids on the same gig again instead of editing the gig
+    # raise error you cannot bid multiple times on the same gig    
+    existing_bid = db.query(Bid).filter(
+        Bid.gig_id == gig_id,
+        Bid.freelancer_id == current_user.id        
+    ).first()
+
+    if existing_bid:
+        raise HTTPException(
+            status_code=400,
+            detail="You have already placed a bid on this gig"
         )
 
     return create_bid(
