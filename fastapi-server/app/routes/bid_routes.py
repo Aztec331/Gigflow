@@ -149,6 +149,8 @@ def post_bid(
         current_user.id
     )
 
+#takes curent user so that
+#only that gig owner can view bids
 @router.get(
     "/gigs/{gig_id}/bids",
     response_model=List[BidResponse]
