@@ -227,7 +227,7 @@ export default function PostGigPage() {
 
             {/* Error */}
             {error && (
-              <div className="bg-red-500 bg-opacity-20 border border-red-500 text-red-400 px-4 py-2 rounded-lg text-sm">
+              <div className="bg-red-500 bg-opacity-20 border border-red-500 text-red-400 px-4 py-2 rounded-lg text-sm text-center">
                 {error}
               </div>
             )}

@@ -2,10 +2,12 @@ import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { Briefcase, TrendingUp, MessageSquare, IndianRupee, ArrowLeft, LogOut } from "lucide-react"
 import { getGigById } from "../api/gigs"
-import { postBid, getBidsByGig } from "../api/bids"
+import { postBid, getBidsByGig, hireBid } from "../api/bids"
 
 export default function GigPage() {
 
+  //useParams returns for example {gigId:5}
+  //finally we get gigId = 5 for the below variable
   const { gigId } = useParams()
   const navigate = useNavigate()
   //user stores a js object like this user = {id: 2,name: "Aditya",email: "aditya@gmail.com"}
@@ -20,6 +22,7 @@ export default function GigPage() {
   const [bidForm, setBidForm] = useState({ message: "", price: "" })
   const [bidError, setBidError] = useState("")
   const [bidLoading, setBidLoading] = useState(false)
+  const [hireLoading, setHireLoading] = useState(false)
   const [bidSuccess, setBidSuccess] = useState(false)
 
   // Bids list states (owner only)
@@ -36,8 +39,17 @@ export default function GigPage() {
 
         // Fetch bids only if current user is the owner
         if (response.data.owner_id === user?.id) {
+
+          setBidsLoading(true)
+
+          try{
           const bidsResponse = await getBidsByGig(gigId, token)
           setBids(bidsResponse.data)
+          }
+          finally{
+            setBidsLoading(false)
+          }
+
         }
       }
       catch (err) {
@@ -72,19 +84,57 @@ export default function GigPage() {
 
     try {
       setBidLoading(true)
-      await postBid(gigId, {
-        message: bidForm.message,
-        price: parseInt(bidForm.price)
-      }, token)
+      await postBid(gigId, 
+        {
+
+          message: bidForm.message,
+          price: parseInt(bidForm.price)
+
+        }, token)
+
+      // Refresh gig details
+      const response = await getGigById(gigId)
+      setGig(response.data)
+
       setBidSuccess(true)
       setBidForm({ message: "", price: "" })
     }
+
     catch (err) {
       setBidError(err.response?.data?.detail || "Something went wrong")
     }
+
     finally {
       setBidLoading(false)
     }
+
+  }
+
+  const handleHire = async (bidId) => {
+
+  try {
+    //disable the button until this api is working 
+    setHireLoading(true)
+
+    await hireBid(
+      gigId,
+      bidId,
+      token
+    )
+
+    // Refresh bids after hiring
+    const bidsResponse = await getBidsByGig(
+      gigId,
+      token
+    )
+
+    setBids(bidsResponse.data)
+
+  } catch (err) {
+    alert(err.response?.data?.detail || "Something went wrong")
+  } finally {
+    setHireLoading(false)
+  }
   }
 
   return (
@@ -200,7 +250,7 @@ export default function GigPage() {
                 <h3 className="text-lg font-semibold mb-6">Place a Bid</h3>
 
                 {bidSuccess && (
-                  <div className="bg-green-500 bg-opacity-20 border border-green-500 text-green-400 px-4 py-2 rounded-lg text-sm mb-4">
+                  <div className="bg-green-500 bg-opacity-20 border border-green-500 text-green-400 px-4 py-2 rounded-lg text-sm mb-4 text-center">
                     Bid placed successfully!
                   </div>
                 )}
@@ -226,7 +276,7 @@ export default function GigPage() {
                     <input
                       type="number"
                       value={bidForm.price}
-                      onChange={(e) => setBidForm(prev => ({ ...prev, price: e.target.value }))}
+                      onChange={(e) => setBidForm(prev => ({ ...prev, price: e.target.value }) )  }
                       placeholder="e.g. 4500"
                       className="w-full px-4 py-3 bg-slate-800 border border-blue-500 border-opacity-30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-400 text-sm"
                     />
@@ -258,12 +308,13 @@ export default function GigPage() {
                   Bids ({bids.length})
                 </h3>
 
+                {/* render all bids of this gig */}
                 {bidsLoading ? (
                   <p className="text-gray-500 text-sm">Loading bids...</p>
                 ) : bids.length === 0 ? (
                   <p className="text-gray-500 text-sm">No bids yet.</p>
                 ) : (
-                  <div className="Individuak_bid space-y-4">
+                  <div className="Individual_bid space-y-4">
                     {bids.map(bid => (
                       <div
                         key={bid.id}
@@ -291,10 +342,13 @@ export default function GigPage() {
                           }`}>
                             {bid.status}
                           </span>
-                          {/* Hire button - coming next */}
+                          {/* SHOW HIRE BUTTON ONLY IF STATUS IS PENDING */}
                           {bid.status === 'pending' && (
-                            <button className="bg-green-600 hover:bg-green-500 text-white px-4 py-1.5 rounded-lg text-xs font-medium transition-colors">
-                              Hire
+                            <button 
+                            onClick={() => handleHire(bid.id)}
+                            disabled={hireLoading}
+                            className="bg-green-600 hover:bg-green-500 text-white px-4 py-1.5 rounded-lg text-xs font-medium transition-colors">
+                              {hireLoading ? "Hiring" : "Hire"}
                             </button>
                           )}
                         </div>

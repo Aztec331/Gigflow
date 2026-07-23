@@ -19,3 +19,7 @@ export const postBid = (gigId, bidData, token) => {
 export const getBidsByGig = (gigId, token) => {
     return api.get(`/api/gigs/${gigId}/bids`, getAuthHeaders(token))
 }
+
+export const hireBid = (gigId, bidId, token) => {
+    return api.patch(`/api/gigs/${gigId}/bids/${bidId}/hire`,{}, getAuthHeaders(token))
+}
