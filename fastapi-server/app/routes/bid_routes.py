@@ -1,15 +1,17 @@
+#Import useful functions and required files
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from jose import jwt, JWTError
 from fastapi.security import OAuth2PasswordBearer
 from typing import List
 
+#Import local files
 from app.database import get_db
 from app.models.user_model import User
 from app.models.gig_model import Gig
 from app.models.bid_model import Bid
 from app.schemas.bid_schema import BidCreate, BidResponse
-from app.crud.bid_crud import create_bid, get_bids_by_gig
+from app.crud.bid_crud import create_bid, get_bids_by_gig, hire_bid
 from app.auth import SECRET_KEY, ALGORITHM
 
 router = APIRouter()
@@ -184,4 +186,52 @@ def get_bids(
         db,
         gig_id
     )
+    
+#hiring logic , hire 1 reject everyone else if one is hired
+@router.patch(
+    "/gigs/{gig_id}/bids/{bid_id}/hire",
+    response_model=BidResponse
+)
+def patch_bid(
+        gig_id:int,
+        bid_id:int,
+        db: Session = Depends(get_db),
+        current_user: User = Depends(get_current_user)
+):
+
+    #Check if gig exists
+    gig = db.query(Gig).filter(
+        Gig.id == gig_id
+    ).first()
+
+    #If gig not found
+    if gig is None:
+        raise HTTPException(
+                    status_code=404,
+                    detail="Gig not found"
+        )
+
+    # Only the gig owner may hire a bidder; reject all other authenticated users.
+    if gig.owner_id != current_user.id:
+        raise HTTPException(
+            status_code=403,
+            detail="You are not allowed to hire for this gig."
+        )
+
+    hired_bid = hire_bid(
+        db,
+        gig_id,
+        bid_id
+    )
+
+    #if someone runs this -PATCH /api/gigs/1/bids/999/hire
+    #it'll return None cause bid 999 doesnt exist
+    if hired_bid is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Bid not found"
+        )
+
+    return hired_bid
+
     

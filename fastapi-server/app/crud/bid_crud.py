@@ -70,7 +70,70 @@ def get_bids_by_gig(
         result.append(bid_dict)
 
     return result
-    
+
+#hire one bid and reject all bids
+def hire_bid(
+        db:Session,
+        gig_id:int,
+        bid_id:int
+):
+
+    #Find the selected bid belonging to this gig or current bid
+    #it'll store something like this 
+    # Bid(
+    # id=5,
+    # gig_id=2,
+    # freelancer_id=7,
+    # message="I can do this",
+    # price=300,
+    # status="pending",
+    # created_at=datetime(...)
+    # )
+    bid = db.query(Bid).filter(
+        Bid.id == bid_id,
+        Bid.gig_id == gig_id
+    ).first()
+
+    #If bid not found return None
+    if bid is None:
+        return None
+
+    #HIRE ONE 
+    #Currently selected bid is hired
+    bid.status = "hired"
+
+    #REJECT EVERYONE ELSE
+    #Reject all other bids for the same gig
+    db.query(Bid).filter(
+        Bid.gig_id == gig_id,
+        Bid.id != bid_id
+    ).update(
+        {
+            "status": "rejected"
+        }
+    )
+
+    db.commit()
+    db.refresh(bid)
+
+
+    freelancer = db.query(User).filter(
+        User.id == bid.freelancer_id
+    ).first()
+
+    return {
+        "id": bid.id,
+        "gig_id": bid.gig_id,
+        "freelancer_id": bid.freelancer_id,
+        "freelancer_name": freelancer.name if freelancer else "Unknown",
+        "message": bid.message,
+        "price": bid.price,
+        "status": bid.status,
+        "created_at": bid.created_at
+    }
+
+
+
     
 
 
