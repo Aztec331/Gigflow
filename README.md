@@ -27,6 +27,10 @@ The project is useful as a focused example of a React/FastAPI application with J
 
 ![GigFlow post-a-gig form](docs/screenshots/post-gig.png)
 
+### Place a bid
+
+![GigFlow freelancer bid form](docs/screenshots/place-bid.png)
+
 ### Owner bid review
 
 ![GigFlow owner bid review and hiring states](docs/screenshots/owner-bids.png)
@@ -758,7 +762,7 @@ Vite normally serves the client at `http://localhost:5173`, which matches the ba
 
 ## 🖼️ Screenshots
 
-The preview images are committed under [`docs/screenshots/`](docs/screenshots/). They show the sign-in screen, gig browsing, gig creation, and the gig-owner view for reviewing and hiring bids.
+The preview images are committed under [`docs/screenshots/`](docs/screenshots/). They show the sign-in screen, gig browsing, gig creation, bid placement, and the gig-owner view for reviewing and hiring bids.
 
 ## 🛠️ Development notes
 
