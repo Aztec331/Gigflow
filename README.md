@@ -13,10 +13,45 @@ GigFlow is a mini freelance marketplace built as a React single-page application
 
 The project is useful as a focused example of a React/FastAPI application with JWT-protected operations and SQLAlchemy persistence. It intentionally implements a small workflow rather than a full commercial marketplace.
 
+## 🖼️ Preview
+
+### Sign in
+
+![GigFlow sign-in page](docs/screenshots/login.png)
+
+### Browse gigs
+
+![GigFlow gig browser](docs/screenshots/gig-list.png)
+
+### Post a gig
+
+![GigFlow post-a-gig form](docs/screenshots/post-gig.png)
+
+### Owner bid review
+
+![GigFlow owner bid review and hiring states](docs/screenshots/owner-bids.png)
+
+## Architecture at a Glance
+
+```text
+React
+  │
+Axios
+  │
+FastAPI
+  │
+SQLAlchemy
+  │
+Database
+```
+
 ## Contents
 
 - [Capabilities](#-capabilities)
+- [Preview](#-preview)
+- [Architecture at a Glance](#architecture-at-a-glance)
 - [System Design](#-system-design)
+- [Architecture Pattern](#-architecture-pattern)
 - [Project layout](#-project-layout)
 - [Database Design](#-database-design)
 - [Authentication and authorization](#-authentication-and-authorization)
@@ -24,6 +59,8 @@ The project is useful as a focused example of a React/FastAPI application with J
 - [Frontend](#-frontend)
 - [Backend](#-backend)
 - [Validation and error handling](#-validation-and-error-handling)
+- [Key Workflow](#-key-workflow)
+- [What I Learned](#-what-i-learned)
 - [Installation](#-installation)
 - [Screenshots](#-screenshots)
 - [Development notes](#-development-notes)
@@ -76,6 +113,20 @@ flowchart LR
 | API | Exposes JSON endpoints, configures CORS, validates request shapes, and guards protected operations. | `fastapi-server/app/` |
 | Domain persistence | Defines SQLAlchemy tables and query/mutation helpers. | `fastapi-server/app/models/`, `crud/` |
 | Data store | Created through the `DATABASE_URL` supplied at runtime. The project does not prescribe a specific database vendor. | Runtime configuration |
+
+## 🏗️ Architecture Pattern
+
+The backend follows a **layered architecture**. Routes handle HTTP concerns and authorization, CRUD helpers perform persistence operations, SQLAlchemy models define the tables, and the database stores the data.
+
+```text
+FastAPI Route
+  ↓
+CRUD Helper
+  ↓
+SQLAlchemy Model
+  ↓
+Database
+```
 
 ### Request lifecycle
 
@@ -572,6 +623,43 @@ Pydantic additionally returns FastAPI’s standard `422 Unprocessable Entity` re
 | `404` | Requested gig or bid does not exist in the relevant scope. |
 | `422` | FastAPI/Pydantic request validation failure. |
 
+## 🔄 Key Workflow
+
+The main marketplace lifecycle is:
+
+```text
+User registers
+  │
+  ▼
+User logs in
+  │
+  ▼
+Client creates a gig
+  │
+  ▼
+Another user submits a bid
+  │
+  ▼
+Gig owner reviews bids
+  │
+  ▼
+Gig owner hires one bidder
+  │
+  ▼
+Selected bid is hired; all other bids are rejected
+```
+
+## 🎓 What I Learned
+
+- Building REST APIs with FastAPI and Pydantic schemas.
+- Implementing JWT-based authentication and protected API endpoints.
+- Modeling users, gigs, and bids with SQLAlchemy foreign keys.
+- Structuring backend code with routes, CRUD helpers, models, and schemas.
+- Building React views with hooks and client-side state.
+- Connecting a React frontend to a REST API with Axios.
+- Using React Router for page-level navigation.
+- Enforcing ownership and marketplace business rules on the server.
+
 ## 🚀 Installation
 
 ### Prerequisites
@@ -670,15 +758,7 @@ Vite normally serves the client at `http://localhost:5173`, which matches the ba
 
 ## 🖼️ Screenshots
 
-No application screenshots are committed to the repository. Add images here as the interface evolves.
-
-| Area | Placeholder |
-| --- | --- |
-| Authentication | `docs/screenshots/authentication.png` |
-| Gig browsing | `docs/screenshots/gig-list.png` |
-| Gig detail and bid form | `docs/screenshots/gig-detail.png` |
-| Post a gig | `docs/screenshots/post-gig.png` |
-| Owner bid review and hiring | `docs/screenshots/owner-bids.png` |
+The preview images are committed under [`docs/screenshots/`](docs/screenshots/). They show the sign-in screen, gig browsing, gig creation, and the gig-owner view for reviewing and hiring bids.
 
 ## 🛠️ Development notes
 
