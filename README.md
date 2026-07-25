@@ -16,9 +16,9 @@ The project is useful as a focused example of a React/FastAPI application with J
 ## Contents
 
 - [Capabilities](#-capabilities)
-- [Architecture](#-architecture)
+- [System Design](#-system-design)
 - [Project layout](#-project-layout)
-- [Data model](#-data-model)
+- [Database Design](#-database-design)
 - [Authentication and authorization](#-authentication-and-authorization)
 - [API reference](#-api-reference)
 - [Frontend](#-frontend)
@@ -54,7 +54,9 @@ The project is useful as a focused example of a React/FastAPI application with J
 
 The navigation visually includes **My Bids** and **Messages**, but those buttons do not navigate to a route or call an API. There is no messaging, profile, payment, review, notification, pagination, or file-upload implementation in this repository.
 
-## 🧱 Architecture
+## 🧱 System Design
+
+This diagram shows how the browser application, API, authentication, and persistence layers communicate.
 
 ```mermaid
 flowchart LR
@@ -161,7 +163,9 @@ The `Rough.jsx`, `rough.js`, and `rough.html` files are exploratory/demo artifac
 | Authentication | python-jose | HS256 JWT encoding and decoding. |
 | Configuration | python-dotenv | Loads `DATABASE_URL` and `SECRET_KEY` from `.env`. |
 
-## 🗃️ Data model
+## 🗃️ Database Design
+
+This entity-relationship diagram shows the database tables, their fields, and the foreign-key links between them.
 
 ```mermaid
 erDiagram
