@@ -720,7 +720,6 @@ No license file is currently included. If this project is intended for open-sour
 
 Replace these placeholders with project ownership details:
 
-- GitHub: `https://github.com/<username>`
-- LinkedIn: `https://www.linkedin.com/in/<username>/`
+- GitHub: [Aztec331](https://github.com/Aztec331)
+- LinkedIn: [Aditya Babar](https://www.linkedin.com/in/aditya-babar-7604141a3/)
 - Portfolio: `https://<your-domain>/`
-
